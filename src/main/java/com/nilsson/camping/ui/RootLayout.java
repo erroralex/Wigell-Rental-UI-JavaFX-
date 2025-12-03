@@ -27,8 +27,14 @@ public class RootLayout extends BorderPane {
     // Instance variable to track the theme state
     private boolean isDarkTheme = true;
 
+    // Store necessary dependencies to recreate SideNavigation
+    private final Stage stage;
+    private final Runnable onLogout;
+
     // The Root Layout
     public RootLayout(Stage stage, Runnable onLogout, CustomTitleBar titleBar) {
+        this.stage = stage;
+        this.onLogout = onLogout;
 
         // Apply the CSS class
         this.getStyleClass().add("root-layout");
@@ -36,15 +42,22 @@ public class RootLayout extends BorderPane {
         // Initialize the global theme tracker, start in Dark-mode
         currentThemeUrl = getClass().getResource(DARK_THEME_CSS).toExternalForm();
 
+        // Initialize Side Navigation and set default content
+        refreshSideNavigation();
+        setContent(new HomeView());
+    }
+
+    /**
+     * Creates a new SideNavigation instance and sets it to the left of the BorderPane.
+     * This method must be called after a successful login to ensure the username is updated.
+     */
+    public void refreshSideNavigation() {
         // Side Navigation (Left)
-        SideNavigation sideNav = new SideNavigation(this, stage, onLogout);
+        SideNavigation sideNav = new SideNavigation(this, this.stage, this.onLogout);
         this.setLeft(sideNav);
 
         // Set side navigation width
         sideNav.setPrefWidth(250);
-
-        // Default View (Center)
-        setContent(new HomeView());
     }
 
     // Public method to swap the main content view.
@@ -53,7 +66,7 @@ public class RootLayout extends BorderPane {
     }
 
     // Toggles the application stylesheet between dark-theme.css and light-theme.css.
-    // Updates the currentThemeUrl, and swaps the stylesheet on the Scene.
+    // Updates the currentThemeUrl and swaps the stylesheet on the Scene.
     public boolean toggleTheme() {
         if (this.getScene() == null) {
             System.err.println("Cannot toggle theme: Scene is null.");

@@ -2,10 +2,7 @@ package com.nilsson.camping.ui.views;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -125,19 +122,22 @@ public class LoginView extends VBox {
         VBox.setVgrow(rootAnchorPane, Priority.ALWAYS);
 
 
-        // --- Action Handling (Temporary Bypass) ---
+        // Login Action Handling
         loginButton.setOnAction(e -> {
             String username = usernameField.getText().trim();
-            // String password = passwordField.getText(); // password is not used in the bypass logic
+            String password = passwordField.getText();
 
-            // Always proceed to login:
-            //if ("0000".equals(password))
-            if (true) {
-                // SUCCESS: Save user session data
-                UserSession.login(username.isEmpty() ? "TestUser" : username);
+            // Check if password matches the required "0000"
+            if ("0000".equals(password)) {
 
-                // Only switch if rootLayout is provided
+                // Set Username, use "Guest" if username is empty
+                UserSession.login(username.isEmpty() ? "Guest" : username);
+
                 if (rootLayout != null) {
+
+                    // Refresh SideNavigation
+                    rootLayout.refreshSideNavigation();
+
                     CustomTitleBar sharedTitleBar = UserSession.getInitializedTitleBar();
 
                     // Ensure the shared title bar is the top of the RootLayout
@@ -148,9 +148,16 @@ public class LoginView extends VBox {
                     // Swap the scene root
                     primaryStage.getScene().setRoot(rootLayout);
 
-                    // Updated title
+                    // Update title
                     primaryStage.setTitle("Wigell Camping - Home");
                 }
+            } else {
+                // Show alert for incorrect password
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Login Failed");
+                alert.setHeaderText(null);
+                alert.setContentText("Incorrect password. Please use '0000'.");
+                alert.showAndWait();
             }
         });
     }
