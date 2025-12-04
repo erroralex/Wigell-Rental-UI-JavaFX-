@@ -48,7 +48,7 @@ public class LoginView extends VBox {
 
         if (logoImage != null) {
             ImageView logoImageView = new ImageView(logoImage);
-            logoImageView.setFitWidth(600);
+            logoImageView.setFitWidth(800);
             logoImageView.setPreserveRatio(true);
             logo.setGraphic(logoImageView);
         } else {

@@ -128,8 +128,8 @@ public class NewRentalDialog extends Dialog<NewRentalResult> {
         Button createButton = (Button) getDialogPane().lookupButton(createButtonType);
         createButton.disableProperty().bind
                 (memberBox.valueProperty().isNull().or
-                (startDatePicker.valueProperty().isNull()).or
-                (daysField.textProperty().isEmpty()));
+                        (startDatePicker.valueProperty().isNull()).or
+                        (daysField.textProperty().isEmpty()));
 
         setResultConverter(dialogButton -> {
             if (dialogButton == createButtonType) {
