@@ -50,7 +50,7 @@ public class HomeView extends VBox {
 
         if (logoImage != null) {
             ImageView statusImageView = new ImageView(logoImage);
-            statusImageView.setFitWidth(600);
+            statusImageView.setFitWidth(800);
             statusImageView.setPreserveRatio(true);
             logo.setGraphic(statusImageView);
             logo.setAlignment(Pos.TOP_CENTER);
