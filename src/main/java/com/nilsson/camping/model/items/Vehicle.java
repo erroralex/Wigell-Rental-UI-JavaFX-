@@ -10,8 +10,8 @@ public class Vehicle extends Item {
 
     }
 
-    public Vehicle(String make, String model, double dailyPrice, String year) {
-        super(dailyPrice);
+    public Vehicle(int itemId, String make, String model, double dailyPrice, String year) {
+        super(itemId, dailyPrice);
         this.make = make;
         this.model = model;
         this.year = year;

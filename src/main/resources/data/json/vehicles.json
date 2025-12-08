@@ -1,4 +1,5 @@
 [ {
+  "itemId" : 10001,
   "dailyPrice" : 1223.0,
   "make" : "Ford",
   "model" : "E-Series RV",
@@ -9,6 +10,7 @@
   "itemName" : "Ford E-Series RV",
   "itemType" : "Motorhome"
 }, {
+  "itemId" : 10002,
   "dailyPrice" : 752.0,
   "make" : "Hobby",
   "model" : "De Luxe 545",
@@ -19,6 +21,7 @@
   "itemName" : "Hobby De Luxe 545",
   "itemType" : "Caravan"
 }, {
+  "itemId" : 10003,
   "dailyPrice" : 1500.0,
   "make" : "Mercedes-Benz",
   "model" : "Sprinter Van Conversion",
@@ -29,6 +32,7 @@
   "itemName" : "Mercedes-Benz Sprinter Van Conversion",
   "itemType" : "Campervan"
 }, {
+  "itemId" : 10004,
   "dailyPrice" : 600.0,
   "make" : "Kabe",
   "model" : "Estate 630",
@@ -39,6 +43,7 @@
   "itemName" : "Kabe Estate 630",
   "itemType" : "Caravan"
 }, {
+  "itemId" : 10005,
   "dailyPrice" : 1350.0,
   "make" : "Fiat",
   "model" : "Ducato 4x4 Camper",
@@ -49,6 +54,7 @@
   "itemName" : "Fiat Ducato 4x4 Camper",
   "itemType" : "Campervan"
 }, {
+  "itemId" : 10006,
   "dailyPrice" : 1050.0,
   "make" : "Citroën",
   "model" : "Jumper RV",
@@ -59,6 +65,7 @@
   "itemName" : "Citroën Jumper RV",
   "itemType" : "Motorhome"
 }, {
+  "itemId" : 10007,
   "dailyPrice" : 820.0,
   "make" : "Polar",
   "model" : "Edition 590",
@@ -69,6 +76,7 @@
   "itemName" : "Polar Edition 590",
   "itemType" : "Caravan"
 }, {
+  "itemId" : 10008,
   "dailyPrice" : 550.0,
   "make" : "Polar",
   "model" : "Mini Caravan",
@@ -79,6 +87,7 @@
   "itemName" : "Polar Mini Caravan",
   "itemType" : "Caravan"
 }, {
+  "itemId" : 10009,
   "dailyPrice" : 950.0,
   "make" : "Fendt",
   "model" : "Opal 560",
@@ -89,6 +98,7 @@
   "itemName" : "Fendt Opal 560",
   "itemType" : "Caravan"
 }, {
+  "itemId" : 10010,
   "dailyPrice" : 2100.0,
   "make" : "Dethleffs",
   "model" : "Globetrotter",
@@ -99,6 +109,7 @@
   "itemName" : "Dethleffs Globetrotter",
   "itemType" : "Motorhome"
 }, {
+  "itemId" : 10011,
   "dailyPrice" : 700.0,
   "make" : "Eriba",
   "model" : "Touring 310",
@@ -109,6 +120,7 @@
   "itemName" : "Eriba Touring 310",
   "itemType" : "Caravan"
 }, {
+  "itemId" : 10012,
   "dailyPrice" : 1150.0,
   "make" : "Peugeot",
   "model" : "Boxer Vanlife",
@@ -119,6 +131,7 @@
   "itemName" : "Peugeot Boxer Vanlife",
   "itemType" : "Campervan"
 }, {
+  "itemId" : 10013,
   "dailyPrice" : 1650.0,
   "make" : "Chausson",
   "model" : "Welcome 747",
@@ -129,6 +142,7 @@
   "itemName" : "Chausson Welcome 747",
   "itemType" : "Motorhome"
 }, {
+  "itemId" : 10014,
   "dailyPrice" : 650.0,
   "make" : "Bürstner",
   "model" : "Premio Life 420",
@@ -139,6 +153,7 @@
   "itemName" : "Bürstner Premio Life 420",
   "itemType" : "Caravan"
 }, {
+  "itemId" : 10015,
   "dailyPrice" : 980.0,
   "make" : "Renault",
   "model" : "Master Camper",
@@ -149,6 +164,7 @@
   "itemName" : "Renault Master Camper",
   "itemType" : "Campervan"
 }, {
+  "itemId" : 10016,
   "dailyPrice" : 2500.0,
   "make" : "Niesmann+Bischoff",
   "model" : "Arto 77E",

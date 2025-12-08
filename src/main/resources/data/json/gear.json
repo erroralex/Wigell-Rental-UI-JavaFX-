@@ -1,4 +1,5 @@
 [ {
+  "itemId" : 11001,
   "dailyPrice" : 110.0,
   "model" : "Outdoor Grill Set Deluxe",
   "type" : "Other Gear",
@@ -7,6 +8,7 @@
   "itemName" : "Outdoor Grill Set Deluxe",
   "itemType" : "Other Gear"
 }, {
+  "itemId" : 11002,
   "dailyPrice" : 450.0,
   "model" : "Arctic Shield 4S",
   "type" : "Tent",
@@ -15,6 +17,7 @@
   "itemName" : "Arctic Shield 4S",
   "itemType" : "Tent"
 }, {
+  "itemId" : 11003,
   "dailyPrice" : 33.0,
   "model" : "Junior Hiker 15L",
   "type" : "Backpack",
@@ -23,6 +26,7 @@
   "itemName" : "Junior Hiker 15L",
   "itemType" : "Backpack"
 }, {
+  "itemId" : 11004,
   "dailyPrice" : 150.0,
   "model" : "Expedition 110L",
   "type" : "Backpack",
@@ -31,6 +35,7 @@
   "itemName" : "Expedition 110L",
   "itemType" : "Backpack"
 }, {
+  "itemId" : 11005,
   "dailyPrice" : 25.0,
   "model" : "Portable Gas Stove",
   "type" : "Other Gear",
@@ -39,6 +44,7 @@
   "itemName" : "Portable Gas Stove",
   "itemType" : "Other Gear"
 }, {
+  "itemId" : 11006,
   "dailyPrice" : 45.0,
   "model" : "Double Hammock Pro",
   "type" : "Other Gear",
@@ -47,6 +53,7 @@
   "itemName" : "Double Hammock Pro",
   "itemType" : "Other Gear"
 }, {
+  "itemId" : 11007,
   "dailyPrice" : 15.0,
   "model" : "Solar Powered Lantern",
   "type" : "Other Gear",
@@ -55,6 +62,7 @@
   "itemName" : "Solar Powered Lantern",
   "itemType" : "Other Gear"
 }, {
+  "itemId" : 11008,
   "dailyPrice" : 35.0,
   "model" : "Water Filter System",
   "type" : "Other Gear",
@@ -63,11 +71,21 @@
   "itemName" : "Water Filter System",
   "itemType" : "Other Gear"
 }, {
+  "itemId" : 11009,
   "dailyPrice" : 60.0,
   "model" : "Sleeping Bag -20C",
   "type" : "Other Gear",
   "capacity" : "1 person",
   "rented" : false,
   "itemName" : "Sleeping Bag -20C",
+  "itemType" : "Other Gear"
+}, {
+  "itemId" : 11010,
+  "dailyPrice" : 25.0,
+  "model" : "Camelback 3000",
+  "type" : "Other Gear",
+  "capacity" : "3L",
+  "rented" : true,
+  "itemName" : "Camelback 3000",
   "itemType" : "Other Gear"
 } ]

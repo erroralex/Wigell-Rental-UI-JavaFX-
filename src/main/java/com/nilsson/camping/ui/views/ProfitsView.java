@@ -2,6 +2,7 @@ package com.nilsson.camping.ui.views;
 
 import com.nilsson.camping.model.DailyProfit;
 import com.nilsson.camping.service.ProfitsService;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,7 +26,10 @@ public class ProfitsView extends VBox {
 
     private final ProfitsService profitsService = new ProfitsService();
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MMM dd");
+
+    // UI Fields
     private final Label incomeTodayValueLabel = new Label();
+    private final Label totalLabelValue = new Label(); // Made field for dynamic update
     private final XYChart.Series<String, Number> profitSeries = new XYChart.Series<>();
 
     public ProfitsView() {
@@ -43,14 +47,10 @@ public class ProfitsView extends VBox {
         HBox incomeTodayBox = createIncomeTodayBox();
 
         // Total Income Display
-        double totalIncome = profitsService.getDailyProfits().stream()
-                .mapToDouble(DailyProfit::getIncome)
-                .sum();
-
         Label totalLabelDesc = new Label("Total Recorded Income:");
-        totalLabelDesc.getStyleClass().add("income-stat-label");
 
-        Label totalLabelValue = new Label(String.format("%,.2f SEK", totalIncome));
+        // CSS Style
+        totalLabelDesc.getStyleClass().add("income-stat-label");
         totalLabelValue.getStyleClass().add("income-stat-value");
 
         HBox totalIncomeBox = new HBox(10, totalLabelDesc, totalLabelValue);
@@ -62,35 +62,53 @@ public class ProfitsView extends VBox {
         incomeChart.getData().add(profitSeries);
 
         // Auto-recalculate on load and populate chart data
-        profitsService.recalculateProfitsFromRentals();
-        updateChartData();
+        updateView(); // Consolidated update method
 
         // Live binding for Today's Income
         incomeTodayValueLabel.textProperty().bind(
                 Bindings.createStringBinding(() ->
-                                String.format("%.2f SEK", profitsService.getIncomeToday()),
-                        profitsService.getObservableDailyProfits()
+                        String.format("%,.2f SEK", profitsService.getIncomeToday()), profitsService.getObservableDailyProfits()
                 )
         );
 
         // Refresh button
         Button refreshBtn = new Button("Refresh Profits");
-        refreshBtn.setOnAction(e -> {
-            profitsService.recalculateProfitsFromRentals();
-            updateChartData();
-        });
+        refreshBtn.setOnAction(e -> updateView());
         refreshBtn.getStyleClass().add("action-button");
 
         // Add all to layout
         this.getChildren().addAll(title, incomeTodayBox, totalIncomeBox, refreshBtn, incomeChart);
     }
 
+    // Logic for updating all stats and the chart data.
+    public void updateView() {
+        // Recalculate and save the profits based on current rentals
+        profitsService.recalculateProfitsFromRentals();
+
+        // Update the total income display
+        updateTotalIncomeDisplay();
+
+        // Update the chart data
+        updateChartData();
+    }
+
+    // Calculates the total sum of all daily profits and updates the label.
+    private void updateTotalIncomeDisplay() {
+        double totalIncome = profitsService.getDailyProfits().stream()
+                .mapToDouble(DailyProfit::getIncome)
+                .sum();
+
+        totalLabelValue.setText(String.format("%,.2f SEK", totalIncome));
+    }
+
     private void updateChartData() {
         LocalDate today = LocalDate.now();
         LocalDate fourteenDaysAgo = today.minusDays(14);
 
+        // Filter profits to include only the last 14 days
         List<DailyProfit> recentProfits = profitsService.getDailyProfits().stream()
                 .filter(p -> !p.getDate().isBefore(fourteenDaysAgo))
+                .filter(p -> !p.getDate().isAfter(today))
                 .sorted(Comparator.comparing(DailyProfit::getDate))
                 .collect(Collectors.toList());
 
@@ -100,10 +118,28 @@ public class ProfitsView extends VBox {
                     profit.getDate().format(DATE_FORMATTER),
                     profit.getIncome()));
         }
+
+        // Update the Chart Data Series
+        profitSeries.getData().clear();
         profitSeries.getData().setAll(newData);
 
-        // Dynamic Y-axis
-        if (!newData.isEmpty()) {
+        // Update and constrain the X-Axis.
+        Platform.runLater(() -> {
+            CategoryAxis xAxis = (CategoryAxis) profitSeries.getChart().getXAxis();
+
+            xAxis.getCategories().clear();
+
+            // Extract dates from the filtered data
+            List<String> categories = newData.stream()
+                    .map(XYChart.Data::getXValue)
+                    .collect(Collectors.toList());
+
+            xAxis.getCategories().setAll(categories);
+        });
+
+
+        // Dynamic Y-axis setup
+        if (!newData.isEmpty() && profitSeries.getChart() != null) {
             double maxIncome = newData.stream()
                     .mapToDouble(data -> data.getYValue().doubleValue())
                     .max()
@@ -111,10 +147,16 @@ public class ProfitsView extends VBox {
 
             // Scale to 120% of max
             double upperBound = Math.ceil(maxIncome * 1.2 / 1000.0) * 1000.0;
+
             NumberAxis yAxis = (NumberAxis) profitSeries.getChart().getYAxis();
-            yAxis.setUpperBound(upperBound);
-            yAxis.setTickUnit(upperBound / 5);
-            yAxis.setAutoRanging(false);
+
+            if (upperBound > 0) {
+                yAxis.setUpperBound(upperBound);
+                yAxis.setTickUnit(upperBound / 5.0);
+                yAxis.setAutoRanging(false);
+            } else {
+                yAxis.setAutoRanging(true);
+            }
         }
     }
 
@@ -137,7 +179,7 @@ public class ProfitsView extends VBox {
 
         // Enable auto-ranging
         yAxis.setAutoRanging(true);
-        yAxis.setForceZeroInRange(false);
+        yAxis.setForceZeroInRange(true);
 
         final BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
 

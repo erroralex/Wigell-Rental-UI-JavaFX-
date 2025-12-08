@@ -7,6 +7,7 @@ import java.util.*;
 public class MemberRegistry {
 
     private List<Member> membersList = new ArrayList<>();
+
     // Tracks all used IDs for unique ID generation
     private Set<Integer> usedIDs = new HashSet<>();
 
@@ -75,5 +76,15 @@ public class MemberRegistry {
         for (Member member : membersList) {
             usedIDs.add(member.getId());
         }
+    }
+
+    // Find a Member object by their unique ID.
+    public Member findMemberById(int id) {
+        for (Member member : membersList) {
+            if (member.getId() == id) {
+                return member;
+            }
+        }
+        return null;
     }
 }

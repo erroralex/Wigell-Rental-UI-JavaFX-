@@ -26,10 +26,25 @@ public class SideNavigation extends VBox {
     private final Button btnInventory;
     private FontIcon themeIcon;
 
+    private final ProfitsView profitsView;
+    private final RentalView rentalView;
+    private final HomeView homeView = new HomeView();
+    private final MemberView memberView = new MemberView();
+    private final VehicleView vehicleView = new VehicleView();
+    private final GearView gearView = new GearView();
+
+
     public SideNavigation(RootLayout rootLayout, Stage primaryStage, Runnable onLogout) {
         this.rootLayout = rootLayout;
         this.primaryStage = primaryStage;
         this.onLogout = onLogout;
+
+        // Initialize ProfitsView
+        this.profitsView = new ProfitsView();
+
+        // Initialize RentalView, passing the update method from ProfitsView
+        this.rentalView = new RentalView(this.profitsView::updateView);
+
 
         // Apply CSS class for the side navigation container
         this.getStyleClass().add("side-navigation");
@@ -65,28 +80,29 @@ public class SideNavigation extends VBox {
         // Home Button
         Button btnHome = createNavButton("Home", FontAwesome.HOME);
         btnHome.setOnAction(e -> {
-            rootLayout.setContent(new HomeView());
+            rootLayout.setContent(homeView);
             setActiveButton(btnHome);
         });
 
         // Members Button
         Button btnMembers = createNavButton("Members", FontAwesome.USERS);
         btnMembers.setOnAction(e -> {
-            rootLayout.setContent(new MemberView());
+            rootLayout.setContent(memberView);
             setActiveButton(btnMembers);
         });
 
         // Rentals Button
         Button btnRentals = createNavButton("Rentals", FontAwesome.PRODUCT_HUNT);
         btnRentals.setOnAction(e -> {
-            rootLayout.setContent(new RentalView());
+            rootLayout.setContent(rentalView);
             setActiveButton(btnRentals);
         });
 
         // Profits Button
         Button btnProfits = createNavButton("Profits", FontAwesome.MONEY);
         btnProfits.setOnAction(e -> {
-            rootLayout.setContent(new ProfitsView());
+            rootLayout.setContent(profitsView);
+            profitsView.updateView();
             setActiveButton(btnProfits);
         });
 
@@ -95,8 +111,8 @@ public class SideNavigation extends VBox {
         // ──────────────────────────────────────────────────────
 
         // Initialize and store the arrow icon
-        FontIcon angleIcon = new FontIcon(FontAwesome.ANGLE_RIGHT); // Starts collapsed (ANGLE_RIGHT)
-        this.inventoryToggleIcon = angleIcon; // Store the reference to the actual icon object
+        FontIcon angleIcon = new FontIcon(FontAwesome.ANGLE_RIGHT);
+        this.inventoryToggleIcon = angleIcon;
 
         // Create the button
         this.btnInventory = createToggleNavButton("Inventory", FontAwesome.CUBES, angleIcon);
@@ -125,14 +141,14 @@ public class SideNavigation extends VBox {
         // Vehicle Sub-Button
         Button btnVehicle = createSubNavButton("Vehicles", FontAwesome.CAR);
         btnVehicle.setOnAction(e -> {
-            rootLayout.setContent(new VehicleView());
+            rootLayout.setContent(vehicleView);
             setActiveButton(btnVehicle);
         });
 
         // Gear Sub-Button
         Button btnGear = createSubNavButton("Gear", FontAwesome.FREE_CODE_CAMP);
         btnGear.setOnAction(e -> {
-            rootLayout.setContent(new GearView());
+            rootLayout.setContent(gearView);
             setActiveButton(btnGear);
         });
 
@@ -272,8 +288,7 @@ public class SideNavigation extends VBox {
                 this.inventoryToggleIcon.setIconLiteral(FontAwesome.ANGLE_DOWN.getDescription());
             }
         } else {
-            // If a main button (Home, Members) is clicked, ensure the Inventory button
-            // is NOT marked as active toggle
+            // If a main button (Home, Members) is clicked, ensure the Inventory button is NOT marked as active toggle
             if (activeButton != btnInventory) {
                 btnInventory.getStyleClass().remove("nav-button-toggle-active");
                 // Reset the arrow if it's not the active button
