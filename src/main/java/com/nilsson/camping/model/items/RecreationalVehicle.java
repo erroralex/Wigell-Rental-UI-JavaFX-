@@ -9,39 +9,20 @@ public class RecreationalVehicle extends Vehicle implements IRentable {
     private String type;
     private boolean rented;
 
-    public RecreationalVehicle() {
+    public RecreationalVehicle() { super(); }
 
-    }
-
-    public RecreationalVehicle(String make, String model, String type, double dailyPrice, String year, String capacity) {
-        super(make, model, dailyPrice, year);
+    public RecreationalVehicle(int itemId, String make, String model, String type, double dailyPrice, String year, String capacity) {
+        super(itemId, make, model, dailyPrice, year);
         this.capacity = capacity;
         this.type = type;
     }
 
-    public String getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(String capacity) {
-        this.capacity = capacity;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public boolean isRented() {
-        return rented;
-    }
-
-    public void setRented(boolean rented) {
-        this.rented = rented;
-    }
+    public String getCapacity() { return capacity; }
+    public void setCapacity(String capacity) { this.capacity = capacity; }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
+    public boolean isRented() { return rented; }
+    public void setRented(boolean rented) { this.rented = rented; }
 
     @Override
     public String toString() {
@@ -56,12 +37,8 @@ public class RecreationalVehicle extends Vehicle implements IRentable {
     }
 
     @Override
-    public String getItemType() {
-        return getType();
-    }
+    public String getItemType() { return getType(); }
 
     @Override
-    public String getItemName() {
-        return getMake() + " " + getModel();
-    }
+    public String getItemName() { return getMake() + " " + getModel(); }
 }

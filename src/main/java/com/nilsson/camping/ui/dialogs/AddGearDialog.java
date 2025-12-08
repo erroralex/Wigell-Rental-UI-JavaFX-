@@ -1,6 +1,7 @@
 package com.nilsson.camping.ui.dialogs;
 
 import com.nilsson.camping.model.items.Gear;
+import com.nilsson.camping.model.registries.Inventory;
 import com.nilsson.camping.ui.UIUtil;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -23,6 +24,7 @@ public class AddGearDialog extends Dialog<Gear> {
     private static final String OTHER = "Other Gear";
 
     public AddGearDialog() {
+
         setTitle("Add New Camping Gear");
         setHeaderText("Enter the details for the new gear.");
 
@@ -73,14 +75,20 @@ public class AddGearDialog extends Dialog<Gear> {
 
         setResultConverter(dialogButton -> {
             if (dialogButton == addButtonType) {
+
+                // New ID.
+                int nextId = Inventory.getInstance().getAllItems().stream()
+                        .mapToInt(i -> i.getItemId())
+                        .max().orElse(9999) + 1;
+
                 return new Gear(
+                        nextId,
                         modelField.getText().trim(),
                         typeBox.getValue(),
                         capacityField.getText().trim(),
                         Double.parseDouble(priceField.getText().trim())
-                        );
+                );
             }
-            // If Cancel is clicked
             return null;
         });
     }

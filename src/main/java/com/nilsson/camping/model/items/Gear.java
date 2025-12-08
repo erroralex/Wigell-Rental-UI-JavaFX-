@@ -11,47 +11,24 @@ public class Gear extends Item implements IRentable {
     private boolean rented;
 
     public Gear() {
-
+        super();
     }
 
-    public Gear(String model, String type, String capacity, double dailyPrice) {
-        super(dailyPrice);
+    public Gear(int itemId, String model, String type, String capacity, double dailyPrice) {
+        super(itemId, dailyPrice);
         this.model = model;
         this.type = type;
         this.capacity = capacity;
     }
 
-    public String getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(String capacity) {
-        this.capacity = capacity;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public boolean isRented() {
-        return rented;
-    }
-
-    public void setRented(boolean rented) {
-        this.rented = rented;
-    }
+    public String getCapacity() { return capacity; }
+    public void setCapacity(String capacity) { this.capacity = capacity; }
+    public String getModel() { return model; }
+    public void setModel(String model) { this.model = model; }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
+    public boolean isRented() { return rented; }
+    public void setRented(boolean rented) { this.rented = rented; }
 
     @Override
     public String toString() {
@@ -64,12 +41,8 @@ public class Gear extends Item implements IRentable {
     }
 
     @Override
-    public String getItemType() {
-        return getType();
-    }
+    public String getItemType() { return getType(); }
 
     @Override
-    public String getItemName() {
-        return getModel();
-    }
+    public String getItemName() { return getModel(); }
 }

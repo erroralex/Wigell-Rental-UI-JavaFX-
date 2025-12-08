@@ -1,6 +1,7 @@
 package com.nilsson.camping.ui.dialogs;
 
 import com.nilsson.camping.model.items.RecreationalVehicle;
+import com.nilsson.camping.model.registries.Inventory;
 import com.nilsson.camping.ui.UIUtil;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -86,7 +87,14 @@ public class AddVehicleDialog extends Dialog<RecreationalVehicle> {
 
         setResultConverter(dialogButton -> {
             if (dialogButton == addButtonType) {
+
+                // New ID.
+                int nextId = Inventory.getInstance().getAllItems().stream()
+                        .mapToInt(v -> v.getItemId())
+                        .max().orElse(9999) + 1;
+
                 return new RecreationalVehicle(
+                        nextId,
                         makeField.getText().trim(),
                         modelField.getText().trim(),
                         typeBox.getValue(),
@@ -95,7 +103,6 @@ public class AddVehicleDialog extends Dialog<RecreationalVehicle> {
                         capacityField.getText().trim()
                 );
             }
-            // If Cancel is clicked
             return null;
         });
     }
