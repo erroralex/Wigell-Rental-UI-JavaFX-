@@ -66,20 +66,49 @@ The system includes a login gatekeeper. Use the following credentials to access 
 
 ```
 src/
-└── com.nilsson.camping
-├── app/            # Main entry point & Session management
-├── data/           # JSON Persistence & File handling
-├── model/          # Data entities (Member, Item, Rental)
-│   ├── items/      # Inheritance hierarchy (Vehicle, Gear)
-│   ├── policies/   # Pricing strategies (IPricePolicy)
-│   └── registries/ # Singleton data stores (Inventory, etc.)
-├── service/        # Business logic layer
-└── ui/             # JavaFX Views, Dialogs & Controls
-├── dialogs/    # Pop-up dialogs (Add/Edit forms)
-└── views/      # Main content screens
+  └── com.nilsson.camping
+      ├── app/            # Application entry, Session & Language management
+      │   ├── MainApp.java
+      │   ├── UserSession.java
+      │   └── LanguageManager.java
+      │
+      ├── data/           # JSON Persistence & File handling
+      │   ├── DataHandler.java
+      │   └── ProfitsHandler.java
+      │
+      ├── model/          # Data entities
+      │   ├── items/      # Inheritance: Item -> Vehicle/Gear
+      │   ├── policies/   # Strategy Pattern: IPricePolicy implementations
+      │   ├── registries/ # Singleton data stores (Inventory, Members)
+      │   └── Member.java, Rental.java, DailyProfit.java
+      │
+      ├── service/        # Business Logic Layer
+      │   ├── InventoryService.java
+      │   ├── MembershipService.java
+      │   ├── ProfitsService.java
+      │   ├── RentalService.java
+      │   └── SessionTimerService.java
+      │
+      └── ui/             # JavaFX User Interface
+          ├── dialogs/    # Pop-up windows (Add/Edit forms)
+          ├── views/      # Main content screens (Tabs)
+          ├── CustomTitleBar.java
+          ├── RootLayout.java
+          ├── SideNavigation.java
+          └── UIUtil.java
 
 resources/
-├── data/json/          # Database files (.json)
-└── *.css, *.png        # Themes & Image assets
+  ├── data/json/          # Database files (.json)
+  │   ├── gear.json
+  │   ├── members.json
+  │   ├── profits.json
+  │   ├── rentals.json
+  │   └── vehicles.json
+  │
+  ├── i18n/               # Internationalization bundles
+  │   ├── messages_en.properties
+  │   └── messages_sv.properties
+  │
+  └── *.css, *.png        # Theme stylesheets & Images
 ```
 ---

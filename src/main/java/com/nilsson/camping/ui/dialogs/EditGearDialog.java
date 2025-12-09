@@ -1,5 +1,6 @@
 package com.nilsson.camping.ui.dialogs;
 
+import com.nilsson.camping.app.LanguageManager;
 import com.nilsson.camping.model.items.Gear;
 import com.nilsson.camping.ui.UIUtil;
 import javafx.application.Platform;
@@ -18,9 +19,9 @@ public class EditGearDialog extends Dialog<Gear> {
     private final TextField priceField = new TextField();
     private final ComboBox<String> typeBox = new ComboBox<>();
 
-    private static final String TENT = "Tent";
-    private static final String BACKPACK = "Backpack";
-    private static final String OTHER = "Other Gear";
+    private static final String TENT = LanguageManager.getInstance().getString("txt.tent");
+    private static final String BACKPACK = LanguageManager.getInstance().getString("txt.backpack");
+    private static final String OTHER = LanguageManager.getInstance().getString("txt.otherGear");
 
     private final Gear gearToEdit;
 

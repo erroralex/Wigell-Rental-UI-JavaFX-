@@ -1,5 +1,6 @@
 package com.nilsson.camping.ui.dialogs;
 
+import com.nilsson.camping.app.LanguageManager;
 import com.nilsson.camping.model.Member;
 import com.nilsson.camping.ui.UIUtil;
 import javafx.application.Platform;
@@ -22,16 +23,19 @@ public class AddMemberDialog extends Dialog<Member> {
     private static final String STUDENT_LEVEL = "Student";
 
     public AddMemberDialog() {
-        setTitle("Add New Member");
-        setHeaderText("Enter the details for the new member.");
+        setTitle(LanguageManager.getInstance().getString("txt.addMemberTitle"));
+        setHeaderText(LanguageManager.getInstance().getString("txt.addMemberHeader"));
 
         // Apply theme and mouse-drag
         this.setOnShowing(dialogEvent -> {
             UIUtil.applyDialogSetup(this);
         });
 
-        ButtonType addButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
-        getDialogPane().getButtonTypes().addAll(addButtonType, ButtonType.CANCEL);
+        ButtonType addButtonType = new ButtonType(LanguageManager.getInstance().getString("btn.add"),
+                ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButtonType = new ButtonType(LanguageManager.getInstance().getString("btn.cancel"),
+                ButtonBar.ButtonData.CANCEL_CLOSE);
+        getDialogPane().getButtonTypes().addAll(addButtonType, cancelButtonType);
 
         // Form Layout
         GridPane grid = createGridPane();
@@ -42,23 +46,19 @@ public class AddMemberDialog extends Dialog<Member> {
         levelBox.setMaxWidth(Double.MAX_VALUE);
 
         // Grid layout
-        grid.add(new Label("First Name"), 0, 0);
+        grid.add(new Label(LanguageManager.getInstance().getString("table.firstName")), 0, 0);
         grid.add(firstNameField, 1, 0);
-        firstNameField.setPromptText("(e.g., John)");
+        firstNameField.setPromptText(LanguageManager.getInstance().getString("txt.firstNamePrompt"));
 
-        grid.add(new Label("Last Name"), 0, 1);
+        grid.add(new Label(LanguageManager.getInstance().getString("table.lastName")), 0, 1);
         grid.add(lastNameField, 1, 1);
-        lastNameField.setPromptText("(e.g., Doe)");
+        lastNameField.setPromptText(LanguageManager.getInstance().getString("txt.lastNamePrompt"));
 
-        grid.add(new Label("Membership Level"), 0, 2);
+        grid.add(new Label(LanguageManager.getInstance().getString("table.membershiplevel")), 0, 2);
         grid.add(levelBox, 1, 2);
 
         // Membership level descriptions
-        Label descriptionLabel = new Label(
-                "• Student: 20% Discount on rentals.\n" +
-                        "• Standard: Regular base rates.\n" +
-                        "• Premium: 20% Surcharge (Includes 24/7 Support)."
-        );
+        Label descriptionLabel = new Label(LanguageManager.getInstance().getString("txt.membershipDescription"));
 
         // Text wrapping and width
         descriptionLabel.setWrapText(true);

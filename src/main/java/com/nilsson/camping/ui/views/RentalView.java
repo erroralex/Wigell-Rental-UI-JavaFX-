@@ -1,5 +1,6 @@
 package com.nilsson.camping.ui.views;
 
+import com.nilsson.camping.app.LanguageManager;
 import com.nilsson.camping.model.Member;
 import com.nilsson.camping.model.Rental;
 import com.nilsson.camping.model.items.IRentable;
@@ -20,8 +21,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-
-import java.time.LocalDate;
 import java.util.List;
 
 public class RentalView extends VBox {
@@ -47,11 +46,11 @@ public class RentalView extends VBox {
         this.setAlignment(Pos.TOP_LEFT);
         VBox.setVgrow(rentalTable, Priority.ALWAYS);
 
-        Label title = new Label("Rental Management");
+        Label title = new Label(LanguageManager.getInstance().getString("txt.rentalManagement"));
         title.getStyleClass().add("content-title");
 
         // Search Field Setup
-        searchField.setPromptText("Search by Member, Item or ID...");
+        searchField.setPromptText(LanguageManager.getInstance().getString("txt.rentalSearch"));
         searchField.setMaxWidth(400);
 
         // Load data and setup
@@ -79,13 +78,13 @@ public class RentalView extends VBox {
     private void initializeTable() {
 
         // Rental ID
-        TableColumn<Rental, String> idCol = new TableColumn<>("Rental ID");
+        TableColumn<Rental, String> idCol = new TableColumn<>(LanguageManager.getInstance().getString("table.rentalId"));
         idCol.setCellValueFactory(c ->
                 new SimpleStringProperty(String.valueOf(c.getValue().getRentalId()))
         );
 
         // Member
-        TableColumn<Rental, String> memberCol = new TableColumn<>("Member");
+        TableColumn<Rental, String> memberCol = new TableColumn<>(LanguageManager.getInstance().getString("table.member"));
         memberCol.setCellValueFactory(c ->
                 new SimpleStringProperty(
                         rentalService.getMemberNameFromId(c.getValue().getMemberId())
@@ -93,7 +92,7 @@ public class RentalView extends VBox {
         );
 
         // Item
-        TableColumn<Rental, String> itemCol = new TableColumn<>("Item");
+        TableColumn<Rental, String> itemCol = new TableColumn<>(LanguageManager.getInstance().getString("table.item"));
         itemCol.setCellValueFactory(c ->
                 new SimpleStringProperty(
                         rentalService.getItemNameFromId(c.getValue().getItemId())
@@ -101,19 +100,19 @@ public class RentalView extends VBox {
         );
 
         // Start date
-        TableColumn<Rental, String> startDateCol = new TableColumn<>("Start Date");
+        TableColumn<Rental, String> startDateCol = new TableColumn<>(LanguageManager.getInstance().getString("table.startDate"));
         startDateCol.setCellValueFactory(c ->
                 new SimpleStringProperty(c.getValue().getStartDate().toString())
         );
 
         // Days
-        TableColumn<Rental, String> daysCol = new TableColumn<>("Days");
+        TableColumn<Rental, String> daysCol = new TableColumn<>(LanguageManager.getInstance().getString("table.days"));
         daysCol.setCellValueFactory(c ->
                 new SimpleStringProperty(String.valueOf(c.getValue().getRentalDays()))
         );
 
         // Price
-        TableColumn<Rental, String> priceCol = new TableColumn<>("Total (SEK)");
+        TableColumn<Rental, String> priceCol = new TableColumn<>(LanguageManager.getInstance().getString("table.total"));
         priceCol.setCellValueFactory(c -> {
             double total = profitsService.calculateRentalRevenue(c.getValue());
             return new SimpleStringProperty(String.format("%.2f", total));
@@ -174,19 +173,19 @@ public class RentalView extends VBox {
     private HBox createButtonBar() {
 
         // Add Member button
-        Button btnAdd = new Button("Add Member");
+        Button btnAdd = new Button(LanguageManager.getInstance().getString("btn.addMember"));
         btnAdd.getStyleClass().add("action-button");
         btnAdd.setOnAction(actionEvent -> {
             membershipService.handleAddMember();
         });
 
         // New Rental Button
-        Button btnNewRental = new Button("New Rental");
+        Button btnNewRental = new Button(LanguageManager.getInstance().getString("btn.newRental"));
         btnNewRental.getStyleClass().add("action-button");
         btnNewRental.setOnAction(e -> openNewRentalDialog());
 
         // Return Rental button
-        Button btnReturnRental = new Button("Return Selected");
+        Button btnReturnRental = new Button(LanguageManager.getInstance().getString("btn.returnRental"));
         btnReturnRental.getStyleClass().add("action-button");
         btnReturnRental.setOnAction(e -> returnSelectedRental());
 

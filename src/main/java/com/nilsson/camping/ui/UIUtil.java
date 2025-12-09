@@ -1,5 +1,6 @@
 package com.nilsson.camping.ui;
 
+import com.nilsson.camping.app.LanguageManager;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -115,7 +116,7 @@ public class UIUtil {
         throwable.printStackTrace(printWriter);
         String exceptionText = stringWriter.toString();
 
-        Label label = new Label("The exception stacktrace was:");
+        Label label = new Label(LanguageManager.getInstance().getString("txt.stacktrace"));
         label.getStyleClass().add("label");
 
         TextArea textArea = new TextArea(exceptionText);

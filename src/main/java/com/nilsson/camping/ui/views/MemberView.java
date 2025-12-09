@@ -1,5 +1,6 @@
 package com.nilsson.camping.ui.views;
 
+import com.nilsson.camping.app.LanguageManager;
 import com.nilsson.camping.model.Member;
 import com.nilsson.camping.model.registries.MemberRegistry;
 import com.nilsson.camping.service.MembershipService;
@@ -35,11 +36,11 @@ public class MemberView extends VBox {
         this.setAlignment(Pos.TOP_LEFT);
         VBox.setVgrow(memberTable, Priority.ALWAYS);
 
-        Label title = new Label("Member Management");
+        Label title = new Label(LanguageManager.getInstance().getString("txt.memberManagement"));
         title.getStyleClass().add("content-title");
 
         // Search Field Setup
-        searchField.setPromptText("Search by Name, Level or ID...");
+        searchField.setPromptText(LanguageManager.getInstance().getString("txt.searchMembers"));
         searchField.setMaxWidth(385);
 
         // TableView
@@ -56,22 +57,22 @@ public class MemberView extends VBox {
     private void initializeTable() {
 
         // ID Column
-        TableColumn<Member, Integer> idCol = new TableColumn<>("ID");
+        TableColumn<Member, Integer> idCol = new TableColumn<>(LanguageManager.getInstance().getString("table.id"));
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         idCol.setPrefWidth(50);
 
         // First Name Column
-        TableColumn<Member, String> firstNameCol = new TableColumn<>("First Name");
+        TableColumn<Member, String> firstNameCol = new TableColumn<>(LanguageManager.getInstance().getString("table.firstName"));
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         firstNameCol.setPrefWidth(200);
 
         // Last Name Column
-        TableColumn<Member, String> lastNameCol = new TableColumn<>("Last Name");
+        TableColumn<Member, String> lastNameCol = new TableColumn<>(LanguageManager.getInstance().getString("table.lastName"));
         lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         lastNameCol.setPrefWidth(200);
 
         // Membership Level Column
-        TableColumn<Member, String> membershipCol = new TableColumn<>("Membership Level");
+        TableColumn<Member, String> membershipCol = new TableColumn<>(LanguageManager.getInstance().getString("table.membershiplevel"));
         membershipCol.setCellValueFactory(new PropertyValueFactory<>("membershipLevel"));
         membershipCol.setPrefWidth(150);
 
@@ -183,7 +184,7 @@ public class MemberView extends VBox {
     // Container for Add, Edit, Remove and History buttons.
     private HBox createButtonBar() {
 
-        Button btnAdd = new Button("Add Member");
+        Button btnAdd = new Button(LanguageManager.getInstance().getString("btn.addMember"));
         btnAdd.getStyleClass().add("action-button");
         btnAdd.setOnAction(actionEvent -> {
             Member newMember = membershipService.handleAddMember();
@@ -194,15 +195,15 @@ public class MemberView extends VBox {
             }
         });
 
-        Button btnEdit = new Button("Edit Member");
+        Button btnEdit = new Button(LanguageManager.getInstance().getString("btn.editMember"));
         btnEdit.getStyleClass().add("action-button");
         btnEdit.setOnAction(actionEvent -> handleEditMember());
 
-        Button btnRemove = new Button("Remove Member");
+        Button btnRemove = new Button(LanguageManager.getInstance().getString("btn.removeMember"));
         btnRemove.getStyleClass().add("action-button");
         btnRemove.setOnAction(actionEvent -> handleRemoveMember());
 
-        Button btnHistory = new Button("Member History");
+        Button btnHistory = new Button(LanguageManager.getInstance().getString("btn.history"));
         btnHistory.getStyleClass().add("action-button");
         btnHistory.setOnAction(actionEvent -> handleShowHistory());
 

@@ -1,5 +1,6 @@
 package com.nilsson.camping.ui;
 
+import com.nilsson.camping.app.LanguageManager;
 import com.nilsson.camping.app.UserSession;
 import com.nilsson.camping.ui.views.*;
 import javafx.geometry.Insets;
@@ -19,6 +20,7 @@ public class SideNavigation extends VBox {
     private final RootLayout rootLayout;
     private final Stage primaryStage;
     private final Runnable onLogout;
+    private final Runnable onLanguageChange;
 
     private Button activeButton;
     private final VBox inventorySubMenu;
@@ -34,10 +36,11 @@ public class SideNavigation extends VBox {
     private final GearView gearView = new GearView();
 
 
-    public SideNavigation(RootLayout rootLayout, Stage primaryStage, Runnable onLogout) {
+    public SideNavigation(RootLayout rootLayout, Stage primaryStage, Runnable onLogout, Runnable onLanguageChange) {
         this.rootLayout = rootLayout;
         this.primaryStage = primaryStage;
         this.onLogout = onLogout;
+        this.onLanguageChange = onLanguageChange;
 
         // Initialize ProfitsView
         this.profitsView = new ProfitsView();
@@ -78,28 +81,28 @@ public class SideNavigation extends VBox {
         // ──────────────────────────────────────────────────────
 
         // Home Button
-        Button btnHome = createNavButton("Home", FontAwesome.HOME);
+        Button btnHome = createNavButton(LanguageManager.getInstance().getString("nav.home"), FontAwesome.HOME);
         btnHome.setOnAction(e -> {
             rootLayout.setContent(homeView);
             setActiveButton(btnHome);
         });
 
         // Members Button
-        Button btnMembers = createNavButton("Members", FontAwesome.USERS);
+        Button btnMembers = createNavButton(LanguageManager.getInstance().getString("nav.members"), FontAwesome.USERS);
         btnMembers.setOnAction(e -> {
             rootLayout.setContent(memberView);
             setActiveButton(btnMembers);
         });
 
         // Rentals Button
-        Button btnRentals = createNavButton("Rentals", FontAwesome.PRODUCT_HUNT);
+        Button btnRentals = createNavButton(LanguageManager.getInstance().getString("nav.rentals"), FontAwesome.PRODUCT_HUNT);
         btnRentals.setOnAction(e -> {
             rootLayout.setContent(rentalView);
             setActiveButton(btnRentals);
         });
 
         // Profits Button
-        Button btnProfits = createNavButton("Profits", FontAwesome.MONEY);
+        Button btnProfits = createNavButton(LanguageManager.getInstance().getString("nav.profits"), FontAwesome.MONEY);
         btnProfits.setOnAction(e -> {
             rootLayout.setContent(profitsView);
             profitsView.updateView();
@@ -115,7 +118,7 @@ public class SideNavigation extends VBox {
         this.inventoryToggleIcon = angleIcon;
 
         // Create the button
-        this.btnInventory = createToggleNavButton("Inventory", FontAwesome.CUBES, angleIcon);
+        this.btnInventory = createToggleNavButton(LanguageManager.getInstance().getString("nav.inventory"), FontAwesome.CUBES, angleIcon);
 
         // Toggle Action
         btnInventory.setOnAction(e -> {
@@ -139,14 +142,14 @@ public class SideNavigation extends VBox {
         // ──────────────────────────────────────────────────────
 
         // Vehicle Sub-Button
-        Button btnVehicle = createSubNavButton("Vehicles", FontAwesome.CAR);
+        Button btnVehicle = createSubNavButton(LanguageManager.getInstance().getString("nav.vehicles"), FontAwesome.CAR);
         btnVehicle.setOnAction(e -> {
             rootLayout.setContent(vehicleView);
             setActiveButton(btnVehicle);
         });
 
         // Gear Sub-Button
-        Button btnGear = createSubNavButton("Gear", FontAwesome.FREE_CODE_CAMP);
+        Button btnGear = createSubNavButton(LanguageManager.getInstance().getString("nav.gear"), FontAwesome.FREE_CODE_CAMP);
         btnGear.setOnAction(e -> {
             rootLayout.setContent(gearView);
             setActiveButton(btnGear);
@@ -172,23 +175,33 @@ public class SideNavigation extends VBox {
 
         // Start in dark mode
         this.themeIcon = new FontIcon(FontAwesome.SUN_O);
-        Button btnThemeToggle = createNavButton("Toggle Light-mode", this.themeIcon);
+        Button btnThemeToggle = createNavButton(LanguageManager.getInstance().getString("nav.toggleLight"), this.themeIcon);
 
         btnThemeToggle.setOnAction(e -> {
             boolean isNowDark = rootLayout.toggleTheme();
             if (isNowDark) {
                 // Dark mode
                 this.themeIcon.setIconLiteral(FontAwesome.SUN_O.getDescription());
-                btnThemeToggle.setText("Toggle Light-mode");
+                btnThemeToggle.setText(LanguageManager.getInstance().getString("nav.toggleLight"));
             } else {
                 // Light mode
                 this.themeIcon.setIconLiteral(FontAwesome.MOON_O.getDescription());
-                btnThemeToggle.setText("Toggle Dark-mode");
+                btnThemeToggle.setText(LanguageManager.getInstance().getString("nav.toggleDark"));
             }
         });
 
+        // ──────────────────────────────────────────────────────
+        // Language Toggle Button
+        // ──────────────────────────────────────────────────────
+        FontIcon languageIcon = new FontIcon(FontAwesome.GLOBE);
+        Button btnLanguage = createNavButton(LanguageManager.getInstance().getString("nav.toggleLanguage"), languageIcon);
+        btnLanguage.setOnAction(e -> {
+            LanguageManager.getInstance().toggleLanguage();
+            onLanguageChange.run();
+        });
+
         // Logout Button
-        Button btnLogout = createNavButton("Logout", FontAwesome.SIGN_OUT);
+        Button btnLogout = createNavButton(LanguageManager.getInstance().getString("nav.logout"), FontAwesome.SIGN_OUT);
         btnLogout.getStyleClass().add("btnExit");
         btnLogout.setOnAction(e -> {
             UserSession.logout();
@@ -196,7 +209,7 @@ public class SideNavigation extends VBox {
         });
 
         // Add to VBox
-        this.getChildren().addAll(btnHome, btnMembers, btnInventory, inventorySubMenu, btnRentals, btnProfits, spacer, btnThemeToggle, btnLogout);
+        this.getChildren().addAll(btnHome, btnMembers, btnInventory, inventorySubMenu, btnRentals, btnProfits, spacer, btnThemeToggle, btnLanguage, btnLogout);
 
         // Set initial active button
         setActiveButton(btnHome);

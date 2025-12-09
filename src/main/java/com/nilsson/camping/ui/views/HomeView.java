@@ -1,5 +1,6 @@
 package com.nilsson.camping.ui.views;
 
+import com.nilsson.camping.app.LanguageManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -8,31 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 public class HomeView extends VBox {
-
-    public static final String WELCOME_MESSAGE =
-            "Welcome to Wigell Camping Admin Portal\n" +
-                    "\n" +
-                    "You are logged in as an Administrator.\n" +
-                    "\n" +
-                    "The Wigell Camping Admin Portal is your centralized control panel for managing all aspects of the business. \n" +
-                    "This application provides real-time oversight and tools necessary to maintain inventory, manage bookings, and \n" +
-                    "ensure seamless operations.\n" +
-                    "\n" +
-                    "Key Administrative Capabilities:\n" +
-                    "\n" +
-                    "1. Inventory Management: View, add, edit, and retire vehicles (campers, motorhomes) and rental gear. \n" +
-                    "Ensure all items are properly categorized and maintained with up-to-date details.\n" +
-                    "\n" +
-                    "2. Booking and Rental Oversight: Access a unified view of all current, upcoming, and past rental agreements. \n " +
-                    "Quickly verify reservation status, adjust booking details, and track payment status.\n" +
-                    "\n" +
-                    "3. User Management: Maintain administrative and staff accounts, managing access levels and permissions to \n " +
-                    "ensure system security and operational integrity.\n" +
-                    "\n" +
-                    "4. Reporting and Analytics: Generate reports on rental utilization, revenue tracking, and \n " +
-                    "inventory availability to aid in strategic decision-making.\n" +
-                    "\n" +
-                    "Use the navigation sidebar to access the various modules and start managing your operations efficiently.";
 
     public HomeView() {
         this.setPadding(new Insets(20));
@@ -59,7 +35,13 @@ public class HomeView extends VBox {
             logo.setText("Wigell Camping");
         }
 
-        Label welcomeLabel = new Label(WELCOME_MESSAGE);
+        String welcomeText = LanguageManager.getInstance().getString("txt.welcome");
+
+        Label welcomeLabel = new Label(welcomeText);
+        welcomeLabel.setWrapText(true);
+        welcomeLabel.setMaxWidth(900);
+
+        welcomeLabel.setStyle("-fx-font-size: 1.3em; " + "-fx-line-spacing: 8px; " + "-fx-text-alignment: LEFT;");
 
         this.getChildren().addAll(logo, welcomeLabel);
     }

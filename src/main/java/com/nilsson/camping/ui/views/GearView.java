@@ -1,5 +1,6 @@
 package com.nilsson.camping.ui.views;
 
+import com.nilsson.camping.app.LanguageManager;
 import com.nilsson.camping.model.items.Gear;
 import com.nilsson.camping.model.registries.Inventory;
 import com.nilsson.camping.service.InventoryService;
@@ -36,11 +37,11 @@ public class GearView extends VBox {
         this.setAlignment(Pos.TOP_LEFT);
         VBox.setVgrow(gearTable, Priority.ALWAYS);
 
-        Label title = new Label("Available Gear");
+        Label title = new Label(LanguageManager.getInstance().getString("txt.availableGear"));
         title.getStyleClass().add("content-title");
 
         // Search Field Setup
-        searchField.setPromptText("Search by Model or Type etc...");
+        searchField.setPromptText(LanguageManager.getInstance().getString("txt.searchGear"));
         searchField.setMaxWidth(315);
 
         // TableView
@@ -57,22 +58,22 @@ public class GearView extends VBox {
     private void initializeTable() {
 
         // Model Column
-        TableColumn<Gear, String> modelCol = new TableColumn<>("Model");
+        TableColumn<Gear, String> modelCol = new TableColumn<>(LanguageManager.getInstance().getString("table.model"));
         modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
         modelCol.setPrefWidth(200);
 
         // Type Column
-        TableColumn<Gear, String> typeCol = new TableColumn<>("Type");
+        TableColumn<Gear, String> typeCol = new TableColumn<>(LanguageManager.getInstance().getString("table.type"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         typeCol.setPrefWidth(150);
 
         // Capacity Column
-        TableColumn<Gear, String> capacityCol = new TableColumn<>("Capacity");
+        TableColumn<Gear, String> capacityCol = new TableColumn<>(LanguageManager.getInstance().getString("table.capacity"));
         capacityCol.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         capacityCol.setPrefWidth(150);
 
         // Price Column
-        TableColumn<Gear, Integer> priceCol = new TableColumn<>("Daily Price (SEK)");
+        TableColumn<Gear, Integer> priceCol = new TableColumn<>(LanguageManager.getInstance().getString("table.dailyPrice"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("dailyPrice"));
         priceCol.setPrefWidth(150);
 
@@ -183,19 +184,19 @@ public class GearView extends VBox {
     // Create a container for Add, Edit, Remove and Show All buttons
     private HBox createButtonBar() {
 
-        Button btnAdd = new Button("Add Gear");
+        Button btnAdd = new Button(LanguageManager.getInstance().getString("btn.addGear"));
         btnAdd.getStyleClass().add("action-button");
         btnAdd.setOnAction(actionEvent -> handleAddGear());
 
-        Button btnEdit = new Button("Edit Gear");
+        Button btnEdit = new Button(LanguageManager.getInstance().getString("btn.editGear"));
         btnEdit.getStyleClass().add("action-button");
         btnEdit.setOnAction(actionEvent -> handleEditGear());
 
-        Button btnRemove = new Button("Remove Gear");
+        Button btnRemove = new Button(LanguageManager.getInstance().getString("btn.removeGear"));
         btnRemove.getStyleClass().add("action-button");
         btnRemove.setOnAction(actionEvent -> handleRemoveGear());
 
-        Button btnShowAll = new Button("Show All Gear");
+        Button btnShowAll = new Button(LanguageManager.getInstance().getString("btn.showGear"));
         btnShowAll.getStyleClass().add("action-button");
         btnShowAll.setOnAction(actionEvent -> handleShowAllGear());
 

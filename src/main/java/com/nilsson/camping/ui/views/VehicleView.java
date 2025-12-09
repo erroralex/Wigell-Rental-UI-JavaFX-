@@ -1,5 +1,6 @@
 package com.nilsson.camping.ui.views;
 
+import com.nilsson.camping.app.LanguageManager;
 import com.nilsson.camping.model.items.RecreationalVehicle;
 import com.nilsson.camping.model.registries.Inventory;
 import com.nilsson.camping.service.InventoryService;
@@ -36,11 +37,11 @@ public class VehicleView extends VBox {
         this.setAlignment(Pos.TOP_LEFT);
         VBox.setVgrow(recreationalVehicleTable, Priority.ALWAYS);
 
-        Label title = new Label("Available Vehicles");
+        Label title = new Label(LanguageManager.getInstance().getString("txt.availableVehicles"));
         title.getStyleClass().add("content-title");
 
         // Search Field Setup
-        searchField.setPromptText("Search by Make or Model etc...");
+        searchField.setPromptText(LanguageManager.getInstance().getString("txt.searchVehicles"));
         searchField.setMaxWidth(360);
 
         // TableView
@@ -56,32 +57,32 @@ public class VehicleView extends VBox {
     @SuppressWarnings("unchecked")
     private void initializeTable() {
         // Make Column
-        TableColumn<RecreationalVehicle, String> makeCol = new TableColumn<>("Make");
+        TableColumn<RecreationalVehicle, String> makeCol = new TableColumn<>(LanguageManager.getInstance().getString("table.make"));
         makeCol.setCellValueFactory(new PropertyValueFactory<>("make"));
         makeCol.setPrefWidth(150);
 
         // Model Column
-        TableColumn<RecreationalVehicle, String> modelCol = new TableColumn<>("Model");
+        TableColumn<RecreationalVehicle, String> modelCol = new TableColumn<>(LanguageManager.getInstance().getString("table.model"));
         modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
         modelCol.setPrefWidth(250);
 
         // Year Column
-        TableColumn<RecreationalVehicle, String> yearCol = new TableColumn<>("Year");
+        TableColumn<RecreationalVehicle, String> yearCol = new TableColumn<>(LanguageManager.getInstance().getString("table.year"));
         yearCol.setCellValueFactory(new PropertyValueFactory<>("year"));
         yearCol.setPrefWidth(100);
 
         // Capacity Column
-        TableColumn<RecreationalVehicle, String> capacityCol = new TableColumn<>("Capacity");
+        TableColumn<RecreationalVehicle, String> capacityCol = new TableColumn<>(LanguageManager.getInstance().getString("table.capacity"));
         capacityCol.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         capacityCol.setPrefWidth(125);
 
         // Type Column
-        TableColumn<RecreationalVehicle, String> typeCol = new TableColumn<>("Type");
+        TableColumn<RecreationalVehicle, String> typeCol = new TableColumn<>(LanguageManager.getInstance().getString("table.type"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         typeCol.setPrefWidth(150);
 
         // Price Column
-        TableColumn<RecreationalVehicle, Double> priceCol = new TableColumn<>("Daily Price (SEK)");
+        TableColumn<RecreationalVehicle, Double> priceCol = new TableColumn<>(LanguageManager.getInstance().getString("table.dailyPrice"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("dailyPrice"));
         priceCol.setPrefWidth(125);
 
@@ -195,7 +196,7 @@ public class VehicleView extends VBox {
     // Create a container for Add, Edit, Remove and Show All buttons
     private HBox createButtonBar() {
 
-        Button btnAdd = new Button("Add Vehicle");
+        Button btnAdd = new Button(LanguageManager.getInstance().getString("btn.addVehicle"));
         btnAdd.getStyleClass().add("action-button");
         btnAdd.setOnAction(actionEvent -> {
             RecreationalVehicle newVehicle = inventoryService.handleAddRecreationalVehicle();
@@ -204,15 +205,15 @@ public class VehicleView extends VBox {
             }
         });
 
-        Button btnEdit = new Button("Edit Vehicle");
+        Button btnEdit = new Button(LanguageManager.getInstance().getString("btn.editVehicle"));
         btnEdit.getStyleClass().add("action-button");
         btnEdit.setOnAction(actionEvent -> handleEditRecreationalVehicle());
 
-        Button btnRemove = new Button("Remove Vehicle");
+        Button btnRemove = new Button(LanguageManager.getInstance().getString("btn.removeVehicle"));
         btnRemove.getStyleClass().add("action-button");
         btnRemove.setOnAction(actionEvent -> handleRemoveRecreationalVehicle());
 
-        Button btnShowAll = new Button("Show All Vehicles");
+        Button btnShowAll = new Button(LanguageManager.getInstance().getString("btn.showVehicle"));
         btnShowAll.getStyleClass().add("action-button");
         btnShowAll.setOnAction(actionEvent -> handleShowAllVehicles());
 

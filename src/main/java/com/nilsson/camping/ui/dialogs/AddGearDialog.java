@@ -1,5 +1,6 @@
 package com.nilsson.camping.ui.dialogs;
 
+import com.nilsson.camping.app.LanguageManager;
 import com.nilsson.camping.model.items.Gear;
 import com.nilsson.camping.model.registries.Inventory;
 import com.nilsson.camping.ui.UIUtil;
@@ -19,22 +20,25 @@ public class AddGearDialog extends Dialog<Gear> {
     private final TextField priceField = new TextField();
     private final ComboBox<String> typeBox = new ComboBox<>();
 
-    private static final String TENT = "Tent";
-    private static final String BACKPACK = "Backpack";
-    private static final String OTHER = "Other Gear";
+    private static final String TENT = LanguageManager.getInstance().getString("txt.tent");
+    private static final String BACKPACK = LanguageManager.getInstance().getString("txt.backpack");
+    private static final String OTHER = LanguageManager.getInstance().getString("txt.otherGear");
 
     public AddGearDialog() {
 
-        setTitle("Add New Camping Gear");
-        setHeaderText("Enter the details for the new gear.");
+        setTitle(LanguageManager.getInstance().getString("txt.addGearTitle"));
+        setHeaderText(LanguageManager.getInstance().getString("txt.addGearHeader"));
 
         // Apply theme and mouse-drag
         this.setOnShowing(dialogEvent -> {
             UIUtil.applyDialogSetup(this);
         });
 
-        ButtonType addButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
-        getDialogPane().getButtonTypes().addAll(addButtonType, ButtonType.CANCEL);
+        ButtonType addButtonType = new ButtonType(LanguageManager.getInstance().getString("btn.add"),
+                ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButtonType = new ButtonType(LanguageManager.getInstance().getString("btn.cancel"),
+                ButtonBar.ButtonData.CANCEL_CLOSE);
+        getDialogPane().getButtonTypes().addAll(addButtonType, cancelButtonType);
 
         // Form Layout
         GridPane grid = createGridPane();;
@@ -45,20 +49,20 @@ public class AddGearDialog extends Dialog<Gear> {
         typeBox.setMaxWidth(Double.MAX_VALUE);
 
         // Grid layout
-        grid.add(new Label("Model Name"), 0, 0);
+        grid.add(new Label(LanguageManager.getInstance().getString("txt.modelName")), 0, 0);
         grid.add(modelField, 1, 0);
-        modelField.setPromptText("(e.g., Trail Trekker 2P)");
+        modelField.setPromptText(LanguageManager.getInstance().getString("txt.modelNamePrompt"));
 
-        grid.add(new Label("Type"), 0, 1);
+        grid.add(new Label(LanguageManager.getInstance().getString("table.type")), 0, 1);
         grid.add(typeBox, 1, 1);
 
-        grid.add(new Label("Capacity"), 0, 2);
+        grid.add(new Label(LanguageManager.getInstance().getString("table.capacity")), 0, 2);
         grid.add(capacityField, 1, 2);
-        capacityField.setPromptText("(e.g., 2 people)");
+        capacityField.setPromptText(LanguageManager.getInstance().getString("txt.capacityPrompt"));
 
-        grid.add(new Label("Daily Price (SEK)"), 0, 3);
+        grid.add(new Label(LanguageManager.getInstance().getString("table.dailyPrice")), 0, 3);
         grid.add(priceField, 1, 3);
-        priceField.setPromptText("(e.g., 123)");
+        priceField.setPromptText(LanguageManager.getInstance().getString("txt.dailyPricePrompt"));
 
         getDialogPane().setContent(grid);
 

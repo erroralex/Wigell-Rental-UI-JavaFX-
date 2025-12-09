@@ -12,6 +12,8 @@ import javafx.stage.Stage;
  */
 public class RootLayout extends BorderPane {
 
+    private final Runnable onLanguageChange;
+
     // Theme Constants
     private static final String DARK_THEME_CSS = "/dark-theme.css";
     private static final String LIGHT_THEME_CSS = "/light-theme.css";
@@ -32,9 +34,10 @@ public class RootLayout extends BorderPane {
     private final Runnable onLogout;
 
     // The Root Layout
-    public RootLayout(Stage stage, Runnable onLogout, CustomTitleBar titleBar) {
+    public RootLayout(Stage stage, Runnable onLogout, CustomTitleBar titleBar, Runnable onLanguageChange) {
         this.stage = stage;
         this.onLogout = onLogout;
+        this.onLanguageChange = onLanguageChange;
 
         // Apply the CSS class
         this.getStyleClass().add("root-layout");
@@ -53,7 +56,7 @@ public class RootLayout extends BorderPane {
      */
     public void refreshSideNavigation() {
         // Side Navigation (Left)
-        SideNavigation sideNav = new SideNavigation(this, this.stage, this.onLogout);
+        SideNavigation sideNav = new SideNavigation(this, this.stage, this.onLogout, this.onLanguageChange);
         this.setLeft(sideNav);
 
         // Set side navigation width

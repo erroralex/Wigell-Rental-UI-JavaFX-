@@ -22,6 +22,7 @@ public class MainApp extends Application {
     private RootLayout rootLayout;
     private CustomTitleBar customTitleBar;
     private Runnable onLogout;
+    private Runnable onLanguageChange;
 
     @Override
     public void start(Stage primaryStage) {
@@ -36,14 +37,24 @@ public class MainApp extends Application {
             sessionTimerService = new SessionTimerService(customTitleBar);
             UserSession.initialize(customTitleBar);
 
-            // Go back to the Login View
+            // On Logout:
             onLogout = () -> {
                 UserSession.logout();
                 showLoginView(primaryStage);
             };
 
+            // On Language change:
+            onLanguageChange = () -> {
+                rootLayout = new RootLayout(primaryStage,onLogout,customTitleBar,onLanguageChange);
+
+                BorderPane contentWrapper = new BorderPane();
+                contentWrapper.setTop(customTitleBar);
+                contentWrapper.setCenter(rootLayout);
+                primaryStage.getScene().setRoot(contentWrapper);
+            };
+
             // Instantiate the single RootLayout
-            rootLayout = new RootLayout(primaryStage, onLogout, customTitleBar);
+            rootLayout = new RootLayout(primaryStage, onLogout, customTitleBar, onLanguageChange);
 
             // Show the initial login view
             showLoginView(primaryStage);

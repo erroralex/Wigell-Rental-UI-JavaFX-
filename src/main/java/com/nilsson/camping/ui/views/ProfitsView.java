@@ -1,5 +1,6 @@
 package com.nilsson.camping.ui.views;
 
+import com.nilsson.camping.app.LanguageManager;
 import com.nilsson.camping.model.DailyProfit;
 import com.nilsson.camping.service.ProfitsService;
 import javafx.application.Platform;
@@ -40,14 +41,14 @@ public class ProfitsView extends VBox {
         this.setSpacing(15);
         this.setAlignment(Pos.TOP_LEFT);
 
-        Label title = new Label("Rental Income");
+        Label title = new Label(LanguageManager.getInstance().getString("txt.rentalIncome"));
         title.getStyleClass().add("content-title");
 
         // Today's Income Display
         HBox incomeTodayBox = createIncomeTodayBox();
 
         // Total Income Display
-        Label totalLabelDesc = new Label("Total Recorded Income:");
+        Label totalLabelDesc = new Label(LanguageManager.getInstance().getString("txt.totalRecIncome"));
 
         // CSS Style
         totalLabelDesc.getStyleClass().add("income-stat-label");
@@ -72,7 +73,7 @@ public class ProfitsView extends VBox {
         );
 
         // Refresh button
-        Button refreshBtn = new Button("Refresh Profits");
+        Button refreshBtn = new Button(LanguageManager.getInstance().getString("btn.refreshProfits"));
         refreshBtn.setOnAction(e -> updateView());
         refreshBtn.getStyleClass().add("action-button");
 
@@ -161,7 +162,7 @@ public class ProfitsView extends VBox {
     }
 
     private HBox createIncomeTodayBox() {
-        Label incomeTodayLabel = new Label("Income Today:");
+        Label incomeTodayLabel = new Label(LanguageManager.getInstance().getString("txt.incomeToday"));
         incomeTodayLabel.getStyleClass().add("income-stat-label");
 
         incomeTodayValueLabel.getStyleClass().add("income-stat-value");
@@ -183,9 +184,9 @@ public class ProfitsView extends VBox {
 
         final BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
 
-        barChart.setTitle("Daily Income - Last 14 Days (SEK)");
-        xAxis.setLabel("Date");
-        yAxis.setLabel("Income (SEK)");
+        barChart.setTitle(LanguageManager.getInstance().getString("txt.dailyIncome"));
+        xAxis.setLabel(LanguageManager.getInstance().getString("x.date"));
+        yAxis.setLabel(LanguageManager.getInstance().getString("y.income"));
         barChart.setLegendVisible(false);
 
         barChart.getStyleClass().add("profit-chart");
