@@ -1,42 +1,85 @@
 # 🏕️ Wigell Camping Admin Portal
 
-This is a comprehensive management application designed for overseeing camping memberships, inventory, vehicle rentals, and financial profits. The program is built entirely using **Java** with **programmatic JavaFX** for the graphical user interface.
+**Wigell Camping Admin Portal** is a robust, Java-based management system designed for the administration of a premium camping membership club. It provides comprehensive tools for managing inventory (vehicles & gear), tracking rentals, handling membership data, and visualizing financial performance.
+
+The application is built using **Pure JavaFX** (No FXML) with a focus on Object-Oriented Design principles, layered architecture, and custom UI styling.
 
 ---
 
 ## ✨ Key Features
 
-### 1. ⚙️ Inventory & Rental Management
-The system tracks two main categories of rentable items, all defined by their daily price and capacity:
+### 1. ⚙️ Dynamic Inventory & Rental System
+* **Polymorphic Inventory:** Manages a diverse catalog of rentable items, abstracting generic `Gear` (Tents, Backpacks) and `Vehicles` (RVs, Caravans) under a unified system.
+* **Smart Availability:** Automatically filters items based on their current rental status.
+* **Rental Lifecycle:** Full workflow support for creating new rentals, calculating costs, and processing returns.
 
-* **Gear (e.g., Tents, Backpacks):** Items defined by `model`, `dailyPrice`, `type`, and `capacity`.
-* **Recreational Vehicles (RVs/Caravans):** Defined by `make`, `model`, `dailyPrice`, `year`, `type`, and `capacity`.
-* **Rentals:** A dedicated view for processing and managing active rental transactions.
+### 2. 💳 Strategy-Based Pricing Engine
+The system implements the **Strategy Pattern** to calculate rental costs dynamically based on membership tiers:
+* **Standard:** Base daily rates.
+* **Student:** Applies a **20% discount** to all rentals.
+* **Premium:** Applies a **20% surcharge** (reflecting premium service add-ons).
 
-### 2. 🧑‍🤝‍🧑 Membership Management
-The application handles user data for the **Wigell Camping Premium Members Club**:
+### 3. 🧑‍🤝‍🧑 Membership Management
+* **CRUD Operations:** Create, Read, Update, and Delete members with ease.
+* **History Tracking:** View detailed rental history for every individual member.
+* **Data Integrity:** Input validation ensures data consistency across the application.
 
-* **User Data:** Stores unique four-digit IDs, names, and contact information.
-* **Membership Levels:** Supports different tiers, including `Premium`, `Standard`, and `Student`.
+### 4. 📈 Analytics Dashboard
+* **Real-time Profits:** Instantly calculates income for "Today" vs "Total" historical revenue.
+* **Data Visualization:** Features a dynamic **Bar Chart** that renders rental income over the last 14 days.
 
-### 3. 📈 Profit and Analytics
-A dedicated "Profits" view provides financial oversight of the business operations:
-
-* **Income Summary:** Displays the **Income Today** and the **Total Recorded Income**.
-* **Bar Chart Visualization:** Renders a responsive **Daily Income Over Time** bar chart to visualize financial trends.
-
-### 4. 🎨 UI & Technology
-The entire user interface is constructed dynamically using Java code (not FXML) and features a customizable appearance:
-
-* **Programmatic JavaFX:** The UI is dynamically constructed using Java 8.
-* **Theming:** The application supports two built-in themes: a **Dark Mode** (default) and a **Sleek Light Mode** theme, which can be toggled via the sidebar.
-  
-### 5. Persistence
-The application loads and saves members, vehicles, gear, rentals and profit records in .json format.
+### 5. 🎨 Custom UI & UX
+* **Programmatic JavaFX:** The entire UI is built in pure Java code, offering strict type safety and fine-grained control over layout behavior.
+* **Theming Engine:** Supports hot-swapping between **Dark Mode** (Default) and **Light Mode** CSS themes.
+* **Session Timer:** A multi-threaded background service tracks active session time in the custom title bar.
 
 ---
 
-## 🔑 Login Details
+## 🛠️ Technical Architecture
 
-* **Username (Example):** `admin`
-* **Password (Use):** `0000`
+This project follows a strict **Model-View-Service** architecture to ensure separation of concerns and high cohesion.
+
+### Design Patterns Used
+* **Strategy Pattern:** Used for `IPricePolicy` to decouple pricing logic from the rental service.
+* **Singleton Pattern:** Ensures `Inventory`, `MemberRegistry`, and `RentalRegistry` have a single shared instance throughout the application lifecycle.
+* **Observer Pattern:** Utilized via JavaFX Observables to update the UI (Charts, Tables) instantly when underlying data changes.
+
+### Technology Stack
+* **Language:** Java 17+
+* **GUI Framework:** JavaFX (Controls, Charts, Graphics)
+* **Build Tool:** Maven
+* **Persistence:** JSON (via Jackson Library) for saving/loading data.
+* **Icons:** Ikonli (FontAwesome)
+
+---
+
+## 🔑 Login Credentials
+
+The system includes a login gatekeeper. Use the following credentials to access the dashboard:
+
+* **Username:** `admin` (or any name you prefer)
+* **Password:** `0000`
+
+---
+
+## 📂 Project Structure
+
+```
+src/
+└── com.nilsson.camping
+├── app/            # Main entry point & Session management
+├── data/           # JSON Persistence & File handling
+├── model/          # Data entities (Member, Item, Rental)
+│   ├── items/      # Inheritance hierarchy (Vehicle, Gear)
+│   ├── policies/   # Pricing strategies (IPricePolicy)
+│   └── registries/ # Singleton data stores (Inventory, etc.)
+├── service/        # Business logic layer
+└── ui/             # JavaFX Views, Dialogs & Controls
+├── dialogs/    # Pop-up dialogs (Add/Edit forms)
+└── views/      # Main content screens
+
+resources/
+├── data/json/          # Database files (.json)
+└── *.css, *.png        # Themes & Image assets
+```
+---
