@@ -1,5 +1,9 @@
 package com.nilsson.camping.service;
 
+import com.nilsson.camping.model.policies.IPricePolicy;
+import com.nilsson.camping.model.policies.PremiumPricePolicy;
+import com.nilsson.camping.model.policies.StandardPricePolicy;
+import com.nilsson.camping.model.policies.StudentPricePolicy;
 import com.nilsson.camping.data.ProfitsHandler;
 import com.nilsson.camping.model.DailyProfit;
 import com.nilsson.camping.model.Member;
@@ -99,10 +103,26 @@ public class ProfitsService {
             return 0;
         }
 
-        double price = item.getDailyPrice();
-        int days = rental.getRentalDays();
+        // Check membership level
+        Member member = memberRegistry.findMemberById(rental.getMemberId());
+        String level = (member != null) ? member.getMembershipLevel() : "Standard";
 
-        return price * days;
+        // Which pricing policy to use
+        IPricePolicy policy;
+        double dailyRate = item.getDailyPrice();
+
+        switch (level) {
+            case "Student":
+                policy = new StudentPricePolicy(dailyRate);
+                break;
+            case "Premium":
+                policy = new PremiumPricePolicy(dailyRate);
+                break;
+            default:
+                policy = new StandardPricePolicy(dailyRate);
+                break;
+        }
+        return policy.calculatePrice(rental.getRentalDays());
     }
 
     // Revenue from a specific member (by memberId).

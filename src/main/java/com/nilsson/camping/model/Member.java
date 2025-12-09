@@ -1,7 +1,11 @@
 package com.nilsson.camping.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Member {
     private int id;
     private String firstName;
@@ -62,11 +66,13 @@ public class Member {
     }
 
     // Checks if the member has a Student membership-level.
+    @JsonIgnore
     public boolean isStudent() {
         return "Student".equalsIgnoreCase(this.membershipLevel);
     }
 
     // Checks if the member has a Premium membership-level.
+    @JsonIgnore
     public boolean isPremium() {
         return "Premium".equalsIgnoreCase(this.membershipLevel);
     }
