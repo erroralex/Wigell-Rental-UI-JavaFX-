@@ -1,74 +1,83 @@
-# 🏕️ Wigell Camping Admin Portal
+# Camping Club Rental Management System
 
-**Wigell Camping Admin Portal** is a JavaFX application for managing a camping membership club. It handles inventory (vehicles & gear), rental tracking, member management, and financial reporting.
+![Java](https://img.shields.io/badge/Java-17%2B-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![JavaFX](https://img.shields.io/badge/JavaFX-Code--First-4285F4?style=for-the-badge&logo=java&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-Styling-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![Jackson](https://img.shields.io/badge/Persistence-Jackson_JSON-2f2f2f?style=for-the-badge&logo=json&logoColor=white)
 
-The application is built using **Pure JavaFX** (No FXML) with a focus on Object-Oriented Design principles and layered architecture.
+A comprehensive desktop application for managing rental inventories, membership data, and financial reporting for a camping club.
 
----
-## Screenshots
-![Login View](src/main/java/com/nilsson/camping/screenshots/screenshot_login.png)
-
-![UI View](src/main/java/com/nilsson/camping/screenshots/screenshot_ui.png)
-
-![Profits View](src/main/java/com/nilsson/camping/screenshots/screenshot_profits.png)
-
-![Light-mode](src/main/java/com/nilsson/camping/screenshots/screenshot_lightmode.png)
+This project was built to demonstrate **Object-Oriented Design patterns**, **layered architecture**, and **programmatic UI development** (Pure JavaFX without FXML).
 
 ---
 
-## ✨ Key Features
+## 📸 Interface
 
-### 1. Inventory & Rental Management
-* **Inventory:** Manages a catalog of rentable items, handling both `Gear` (Tents, Backpacks) and `Vehicles` (RVs, Caravans) via a common interface.
-* **Availability:** Items are automatically filtered based on their current rental status.
-* **Rentals:** functionality to create new rentals, calculate costs based on days/membership, and process returns.
+| Dashboard & Themes | Data Management |
+|:---:|:---:|
+| <img src="src/main/java/com/nilsson/camping/screenshots/screenshot_profits.png" width="400" alt="Profits Dark Mode"> | <img src="src/main/java/com/nilsson/camping/screenshots/screenshot_ui.png" width="400" alt="Inventory Grid"> |
+| *Dark Mode Dashboard with Charting* | *Inventory Management Table* |
 
-### 2. Pricing Strategies
-The system uses the **Strategy Pattern** to calculate rental costs based on the member's tier:
-* **Standard:** Regular daily rates.
-* **Student:** 20% discount on all rentals.
-* **Premium:** 20% surcharge (for extra services).
+<details>
+<summary><b>View More Screenshots</b></summary>
+<br>
 
-### 3. Membership Management
-* **CRUD:** Add, edit, and remove members.
-* **History:** View past rental history for each member.
-* **Data:** Single source of truth for membership levels to prevent data conflicts.
+| Login Screen | Light Mode |
+|:---:|:---:|
+| <img src="src/main/java/com/nilsson/camping/screenshots/screenshot_login.png" width="400" alt="Login"> | <img src="src/main/java/com/nilsson/camping/screenshots/screenshot_lightmode.png" width="400" alt="Light Mode"> |
 
-### 4. Financial Tracking
-* **Profits View:** Displays income for the current day and total historical revenue.
-* **Chart:** A bar chart visualizes daily rental income over the last 14 days.
-
-### 5. User Interface
-* **JavaFX:** UI built entirely in Java code.
-* **Themes:** Toggle between **Dark Mode** and **Light Mode**.
-* **Localization:** Switch between **English** and **Swedish** text instantly.
-* **Session Timer:** Tracks active session time in the window title bar.
+</details>
 
 ---
 
 ## 🛠️ Technical Architecture
 
-The project follows a **Model-View-Service** architecture.
+The application follows a **Model-View-Service** architecture to ensure separation of concerns. The UI is decoupled from business logic, and data persistence is handled via a dedicated layer.
 
-### Design Patterns
-* **Strategy Pattern:** Decouples pricing logic (`IPricePolicy`) from the rental service.
-* **Singleton Pattern:** Used for data registries (`Inventory`, `MemberRegistry`) and the `LanguageManager`.
-* **Observer Pattern:** Updates UI components (Charts, Tables) when data changes.
+### Design Patterns Implemented
+* **Strategy Pattern:** Used in the `PricingPolicy` engine. Calculation logic (`Standard`, `Student`, `Premium`) is injected at runtime, allowing for flexible pricing updates without modifying the core rental service.
+* **Singleton Pattern:** Ensures thread-safe, single-instance access to data registries (`Inventory`, `MemberRegistry`) and the `LanguageManager`.
+* **Observer Pattern:** Utilized extensively in the UI to update charts and tables in real-time when underlying data models change.
+* **Polymorphism:** The inventory system treats `Vehicle` and `Gear` as interchangeable `IRentable` items, simplifying the rental logic.
 
 ### Technology Stack
-* **Language:** Java 8
-* **GUI Framework:** JavaFX
+* **Core:** Java 17+, JavaFX (Programmatic DOM, No FXML)
+* **Persistence:** Jackson (JSON Data Binding)
 * **Build Tool:** Maven
-* **Persistence:** JSON (Jackson Library)
-* **Icons:** Ikonli (FontAwesome)
-  
+* **UI Assets:** Ikonli (FontAwesome Pack), Custom CSS Theming
+
 ---
 
-## 🔑 Login Credentials
+## ✨ Key Features
 
-The system includes a login gatekeeper. Use the following credentials to access the dashboard:
+* **Inventory Management:** Unified system for tracking vehicles (RVs, Caravans) and gear (Tents, Backpacks).
+* **Smart Pricing:** Automated cost calculation based on membership tiers (e.g., Student discounts, Premium surcharges).
+* **Financial Reporting:** Live bar charts visualizing income trends over a 14-day rolling window.
+* **Localization:** Instant runtime switching between English and Swedish `ResourceBundles`.
+* **Dynamic Theming:** CSS-driven Dark/Light mode toggle.
 
-* **Username:** `admin` (or any name you prefer)
+---
+
+## 🚀 Getting Started
+
+To run the application locally:
+
+1.  **Clone the repository**
+2.  **Build with Maven:**
+    ```bash
+    mvn clean install
+    ```
+3.  **Run:**
+    ```bash
+    mvn javafx:run
+    ```
+
+---
+
+## 🔒 Default Login
+The system includes a simulated security gatekeeper. Use the following credentials to access the dashboard:
+
+* **Username:** `admin`
 * **Password:** `0000`
 
 ---
@@ -76,50 +85,19 @@ The system includes a login gatekeeper. Use the following credentials to access 
 ## 📂 Project Structure
 
 ```
-src/
-  └── com.nilsson.camping
-      ├── app/            # Application entry, Session & Language management
-      │   ├── MainApp.java
-      │   ├── UserSession.java
-      │   └── LanguageManager.java
-      │
-      ├── data/           # JSON Persistence & File handling
-      │   ├── DataHandler.java
-      │   └── ProfitsHandler.java
-      │
-      ├── model/          # Data entities
-      │   ├── items/      # Inheritance: Item -> Vehicle/Gear
-      │   ├── policies/   # Strategy Pattern: IPricePolicy implementations
-      │   ├── registries/ # Singleton data stores (Inventory, Members)
-      │   └── Member.java, Rental.java, DailyProfit.java
-      │
-      ├── service/        # Business Logic Layer
-      │   ├── InventoryService.java
-      │   ├── MembershipService.java
-      │   ├── ProfitsService.java
-      │   ├── RentalService.java
-      │   └── SessionTimerService.java
-      │
-      └── ui/             # JavaFX User Interface
-          ├── dialogs/    # Pop-up windows (Add/Edit forms)
-          ├── views/      # Main content screens (Tabs)
-          ├── CustomTitleBar.java
-          ├── RootLayout.java
-          ├── SideNavigation.java
-          └── UIUtil.java
-
-resources/
-  ├── data/json/          # Database files (.json)
-  │   ├── gear.json
-  │   ├── members.json
-  │   ├── profits.json
-  │   ├── rentals.json
-  │   └── vehicles.json
-  │
-  ├── i18n/               # Internationalization bundles
-  │   ├── messages_en.properties
-  │   └── messages_sv.properties
-  │
-  └── *.css, *.png        # Theme stylesheets & Images
+src/main/java/com/nilsson/camping
+├── app/            # Entry point, Session & Language management
+├── data/           # JSON Persistence & File I/O
+├── model/          # Entities & Strategy Interfaces (IPricePolicy)
+├── service/        # Business Logic & Calculation Layer
+└── ui/             # Pure JavaFX Views & Custom Components
+    ├── dialogs/    # Modal forms
+    └── views/      # Main application screens
 ```
+---
+
+## 📜 License
+
+This project was developed for educational purposes as part of a System Development course. Distributed under the MIT License.
+
 ---
